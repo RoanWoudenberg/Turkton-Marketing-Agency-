@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tukton Tap — Get More Google Reviews, Instantly</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a0e1a;
+    --blue: #1a56ff;
+    --blue-light: #4d7fff;
+    --blue-glow: rgba(26,86,255,0.18);
+    --gold: #f5c842;
+    --white: #ffffff;
+    --off-white: #f0f2f8;
+    --gray: #8892a4;
+    --card-bg: #111827;
+    --border: rgba(255,255,255,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--blue); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--blue-light) !important; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 60px 80px;
+    overflow: hidden;
+  }
+
+  /* Radial glow backgrounds */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(26,86,255,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26,86,255,0.12);
+    border: 1px solid rgba(26,86,255,0.3);
+    color: var(--blue-light);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .hero-badge::before { content: '●'; font-size: 8px; color: var(--gold); }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(42px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--blue);
+    position: relative;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover {
+    background: var(--blue-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(26,86,255,0.35);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  /* NFC Card Visual */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .nfc-card-wrap {
+    position: relative;
+    width: 320px;
+    height: 420px;
+  }
+
+  .nfc-card {
+    width: 300px;
+    height: 190px;
+    background: linear-gradient(135deg, #1a3aff 0%, #0a1a8a 50%, #050d4d 100%);
+    border-radius: 20px;
+    padding: 28px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-6deg);
+    box-shadow: 0 30px 80px rgba(26,86,255,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+    overflow: hidden;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .nfc-card::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .nfc-card-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .g-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: #1a56ff;
+    flex-shrink: 0;
+  }
+
+  .nfc-card-text {
+    color: rgba(255,255,255,0.7);
+    font-size: 10px;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .nfc-card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: white;
+    line-height: 1.3;
+  }
+
+  .nfc-icon {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    opacity: 0.6;
+  }
+
+  .nfc-rings {
+    width: 40px;
+    height: 40px;
+    position: relative;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) rotate(-6deg) translateY(0); }
+    50% { transform: translate(-50%, -50%) rotate(-6deg) translateY(-12px); }
+  }
+
+  @keyframes ping {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  .ping-ring {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(26,86,255,0.5);
+    border-radius: 50%;
+    animation: ping 2s ease-out infinite;
+  }
+  .ping-ring:nth-child(2) { animation-delay: 0.6s; }
+  .ping-ring:nth-child(3) { animation-delay: 1.2s; }
+  .ping-dot {
+    position: absolute;
+    inset: 25%;
+    background: var(--blue);
+    border-radius: 50%;
+  }
+
+  /* Floating stats around card */
+  .float-stat {
+    position: absolute;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    white-space: nowrap;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+
+  .float-stat .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+  }
+  .float-stat .stat-label {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+
+  .float-stat-1 { top: 20px; left: -20px; animation: float 5s ease-in-out infinite; }
+  .float-stat-2 { bottom: 30px; right: -10px; animation: float 5s ease-in-out infinite 2.5s; }
+
+  .stars { color: var(--gold); font-size: 13px; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    position: relative;
+    z-index: 1;
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 20px;
+  }
+  .stat-item .big-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-item .stat-desc {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* ── HOW IT WORKS ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--blue);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    color: var(--gray);
+    font-size: 17px;
+    line-height: 1.7;
+    max-width: 540px;
+    font-weight: 300;
+    margin-bottom: 60px;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .step-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .step-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(26,86,255,0.4);
+  }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .step-card:hover::before { opacity: 1; }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: rgba(26,86,255,0.15);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .step-desc {
+    color: var(--gray);
+    font-size: 14px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── PACKAGES ── */
+  .packages-section {
+    background: linear-gradient(180deg, transparent 0%, rgba(26,86,255,0.04) 50%, transparent 100%);
+  }
+
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+
+  .package-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .package-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .package-card.featured {
+    border-color: var(--blue);
+    background: linear-gradient(160deg, #0f1f60 0%, var(--card-bg) 60%);
+    transform: scale(1.03);
+  }
+  .package-card.featured:hover { transform: scale(1.03) translateY(-6px); }
+
+  .featured-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--gold);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  .pkg-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--blue-light);
+    margin-bottom: 12px;
+  }
+
+  .pkg-price {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .pkg-price sup { font-size: 24px; vertical-align: top; margin-top: 8px; }
+  .pkg-period { font-size: 13px; color: var(--gray); margin-bottom: 28px; }
+
+  .pkg-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
+
+  .pkg-features {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+  .pkg-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--gray);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .pkg-features li::before {
+    content: '✓';
+    color: var(--blue-light);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .pkg-btn {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+  .pkg-btn-outline {
+    border: 1px solid var(--border);
+    color: var(--white);
+    background: transparent;
+  }
+  .pkg-btn-outline:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.05); }
+  .pkg-btn-fill {
+    background: var(--blue);
+    color: white;
+  }
+  .pkg-btn-fill:hover { background: var(--blue-light); box-shadow: 0 8px 25px rgba(26,86,255,0.4); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    transition: transform 0.3s;
+  }
+  .testi-card:hover { transform: translateY(-4px); }
+
+  .testi-stars { color: var(--gold); font-size: 16px; margin-bottom: 16px; }
+
+  .testi-text {
+    font-size: 15px;
+    color: var(--off-white);
+    line-height: 1.7;
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testi-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .testi-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .testi-biz { font-size: 12px; color: var(--gray); }
+
+  /* ── WHY VANCOUVER ── */
+  .vancouver-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .van-stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .van-stat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 20px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .van-stat-box:hover { transform: translateY(-4px); border-color: rgba(26,86,255,0.3); }
+
+  .van-stat-box .big-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .van-stat-box .desc { font-size: 13px; color: var(--gray); line-height: 1.5; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    padding: 100px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(26,86,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section .section-title { margin-bottom: 20px; }
+
+  .cta-section p {
+    color: var(--gray);
+    font-size: 18px;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ── CONTACT FORM ── */
+  .contact-section {
+    padding: 80px 60px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .form-group.full { grid-column: 1 / -1; }
+
+  label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray);
+  }
+
+  input, select, textarea {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(26,86,255,0.15);
+  }
+  select option { background: #111827; }
+  textarea { resize: vertical; min-height: 110px; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s;
+    margin-top: 8px;
+  }
+  .submit-btn:hover {
+    background: var(--blue-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(26,86,255,0.4);
+  }
+
+  .success-msg {
+    display: none;
+    background: rgba(46,125,50,0.15);
+    border: 1px solid rgba(46,125,50,0.4);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: #81c784;
+    font-size: 15px;
+    margin-top: 16px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+  }
+
+  footer p { font-size: 13px; color: var(--gray); }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .footer-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+    .hero-visual { order: -1; }
+    section { padding: 60px 24px; }
+    .stats-bar { grid-template-columns: repeat(2,1fr); padding: 40px 24px; }
+    .steps-grid, .packages-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .package-card.featured { transform: none; }
+    .vancouver-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 20px; padding: 30px 24px; }
+    .cta-section { padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Tukton<span> Tap</span></a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#packages">Pricing</a></li>
+    <li><a href="#why-vancouver">Vancouver</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge fade-up">Tukton Tap · Vancouver, BC</div>
+      <h1 class="fade-up delay-1">One Tap.<br><em>More Reviews.</em><br>More Customers.</h1>
+      <p class="fade-up delay-2">NFC-powered cards that send your happy customers straight to your Google review page — instantly. No app. No typing. No friction.</p>
+      <div class="hero-buttons fade-up delay-3">
+        <a href="#contact" class="btn-primary">Get Your Cards →</a>
+        <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-up delay-2">
+      <div class="nfc-card-wrap">
+        <div class="float-stat float-stat-1">
+          <div class="stars">★★★★★</div>
+          <div class="stat-num">+47</div>
+          <div class="stat-label">New reviews this month</div>
+        </div>
+        <div class="nfc-card">
+          <div class="nfc-card-logo">
+            <div class="g-logo">G</div>
+            <div>
+              <div class="nfc-card-text">Leave a review on</div>
+              <div class="nfc-card-title">Google</div>
+            </div>
+          </div>
+          <div class="nfc-card-text" style="margin-bottom:4px;">TAP TO REVIEW</div>
+          <div class="nfc-card-title" style="font-size:18px;">Mario's Kitchen</div>
+          <div class="nfc-icon">
+            <div class="nfc-rings">
+              <div class="ping-ring"></div>
+              <div class="ping-ring"></div>
+              <div class="ping-ring"></div>
+              <div class="ping-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="float-stat float-stat-2">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">More reviews in 30 days</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div style="position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="big-num">77%</div>
+      <div class="stat-desc">of customers read Google reviews before visiting a local business</div>
+    </div>
+    <div class="stat-item">
+      <div class="big-num">53%</div>
+      <div class="stat-desc">won't consider a business with less than 4.0 stars</div>
+    </div>
+    <div class="stat-item">
+      <div class="big-num">900K</div>
+      <div class="stat-desc">visitors coming to Vancouver for the 2026 FIFA World Cup</div>
+    </div>
+    <div class="stat-item">
+      <div class="big-num">2 min</div>
+      <div class="stat-desc">to set up each card — we program it for your exact Google listing</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="section-label">The Process</div>
+  <h2 class="section-title">Stupid simple.<br>Remarkably effective.</h2>
+  <p class="section-sub">We handle the setup. Your customers just tap. Your review count climbs.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <span class="step-icon">📍</span>
+      <div class="step-title">We Find Your Listing</div>
+      <p class="step-desc">We pull your unique Google review link directly from Google Maps — the exact URL that opens a review prompt for your business.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <span class="step-icon">⚡</span>
+      <div class="step-title">We Program Your Card</div>
+      <p class="step-desc">Your review link is written directly onto the NFC chip. Takes 2 minutes. The card now belongs exclusively to your business.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <span class="step-icon">📱</span>
+      <div class="step-title">Customers Tap & Review</div>
+      <p class="step-desc">Place the card at your counter, table, or service area. Customers tap their phone — Google opens instantly. No app, no searching, no friction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages" style="padding-top:0;">
+  <div class="section-label">Pricing</div>
+  <h2 class="section-title">Pick your package.</h2>
+  <p class="section-sub">One-time setup fee. Cards ship within days. Start collecting reviews immediately.</p>
+  <div class="packages-grid">
+    <div class="package-card">
+      <div class="pkg-name">Starter</div>
+      <div class="pkg-price"><sup>$</sup>45</div>
+      <div class="pkg-period">one card, programmed & ready</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>1 NFC card</li>
+        <li>Programmed to your Google listing</li>
+        <li>Works on all modern iPhones & Androids</li>
+        <li>Setup in under 24 hrs</li>
+      </ul>
+      <a href="#contact" class="pkg-btn pkg-btn-outline">Get Started</a>
+    </div>
+    <div class="package-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="pkg-name">Business Pack</div>
+      <div class="pkg-price"><sup>$</sup>99</div>
+      <div class="pkg-period">3 cards + tabletop stand</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>3 NFC cards (counter, table, desk)</li>
+        <li>1 branded tabletop stand</li>
+        <li>All cards programmed to your listing</li>
+        <li>Replacement card guarantee</li>
+        <li>Setup in under 24 hrs</li>
+      </ul>
+      <a href="#contact" class="pkg-btn pkg-btn-fill">Get This Pack</a>
+    </div>
+    <div class="package-card">
+      <div class="pkg-name">Pro + Monthly</div>
+      <div class="pkg-price"><sup>$</sup>75</div>
+      <div class="pkg-period">setup + $49/mo review management</div>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-features">
+        <li>Everything in Business Pack</li>
+        <li>Weekly new review summary</li>
+        <li>Alert for every new review</li>
+        <li>AI-drafted reply suggestions</li>
+        <li>Monthly performance report</li>
+        <li>Cancel anytime</li>
+      </ul>
+      <a href="#contact" class="pkg-btn pkg-btn-outline">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="padding-top:0;">
+  <div class="section-label">Results</div>
+  <h2 class="section-title">Local businesses love it.</h2>
+  <p class="section-sub">Real results from Vancouver businesses just like yours.</p>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"We went from 34 Google reviews to 91 in under 6 weeks. I didn't change anything except putting the card on the counter. It just works."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#1a56ff,#4d7fff);">M</div>
+        <div>
+          <div class="testi-name">Marco R.</div>
+          <div class="testi-biz">Pizzeria · Gastown</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"My barbershop was invisible on Google. Now I'm ranking in the top 3 for 'barber near me' in Kitsilano. The card paid for itself in the first week."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#f5c842,#ff9800);">D</div>
+        <div>
+          <div class="testi-name">Devon K.</div>
+          <div class="testi-biz">Barbershop · Kitsilano</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Our service department gets 40+ customers a week and barely had any reviews. Now we're at 4.8 stars and customers mention it when they come in."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#00bfa5,#00897b);">S</div>
+        <div>
+          <div class="testi-name">Sarah T.</div>
+          <div class="testi-biz">Auto Dealership · Burnaby</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY VANCOUVER -->
+<section id="why-vancouver" style="padding-top:0;">
+  <div class="vancouver-grid">
+    <div>
+      <div class="section-label">Why Now</div>
+      <h2 class="section-title">Vancouver is about to get a lot more competitive.</h2>
+      <p class="section-sub">With the FIFA World Cup 2026 bringing nearly a million visitors to the city, tourists will rely almost entirely on Google to decide where to spend their money. The businesses with the most reviews win.</p>
+      <p style="color:var(--gray);font-size:15px;line-height:1.7;font-weight:300;">Google's 2024 algorithm update means local businesses with strong review profiles can now outrank national chains in neighborhood searches. Your reviews are your most valuable marketing asset — and most businesses are leaving them on the table.</p>
+    </div>
+    <div class="van-stat-grid">
+      <div class="van-stat-box">
+        <div class="big-num">900K</div>
+        <div class="desc">World Cup visitors expected in Vancouver in 2026</div>
+      </div>
+      <div class="van-stat-box">
+        <div class="big-num">$1B+</div>
+        <div class="desc">in additional visitor spending projected for the city</div>
+      </div>
+      <div class="van-stat-box">
+        <div class="big-num">#1</div>
+        <div class="desc">Google ranking factor for local search is review quality & quantity</div>
+      </div>
+      <div class="van-stat-box">
+        <div class="big-num">60%</div>
+        <div class="desc">of Google searches end directly on the Business Profile — never clicking a website</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <div class="section-label" style="text-align:center;">Ready?</div>
+    <h2 class="section-title">Your next 50 reviews<br>are one tap away.</h2>
+    <p>Takes less than 24 hours to set up. No contracts. No tech skills needed. Just more reviews, automatically.</p>
+    <div class="cta-buttons">
+      <a href="#contact" class="btn-primary">Order Your Cards Today →</a>
+      <a href="tel:+16043525041" class="btn-secondary">📞 604-352-5041</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-top:20px;">
+  <div class="section-label" style="text-align:center;">Contact</div>
+  <h2 class="section-title" style="text-align:center;margin-bottom:12px;">Get in touch.</h2>
+  <p style="color:var(--gray);font-size:16px;text-align:center;margin-bottom:48px;font-weight:300;">We'll set up your card and have it ready within 24 hours.</p>
+  <div style="max-width:560px;margin:0 auto;">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" id="fname" placeholder="Marco">
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" id="lname" placeholder="Rossi">
+      </div>
+      <div class="form-group full">
+        <label>Business Name</label>
+        <input type="text" id="biz" placeholder="Mario's Kitchen">
+      </div>
+      <div class="form-group full">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="marco@marioskitchen.ca">
+      </div>
+      <div class="form-group full">
+        <label>Business Type</label>
+        <select id="biztype">
+          <option value="">Select your business type...</option>
+          <option>Restaurant / Café</option>
+          <option>Barbershop / Salon</option>
+          <option>Auto Dealership</option>
+          <option>Health & Wellness / Clinic</option>
+          <option>Gym / Fitness Studio</option>
+          <option>Contractor / Trades</option>
+          <option>Retail Shop</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Package Interested In</label>
+        <select id="pkg">
+          <option value="">Select a package...</option>
+          <option>Starter — $45 (1 card)</option>
+          <option>Business Pack — $99 (3 cards + stand)</option>
+          <option>Pro + Monthly — $75 setup + $49/mo</option>
+          <option>Not sure yet — just exploring</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label>Message (optional)</label>
+        <textarea id="msg" placeholder="Tell us about your business, any questions, or special requests..."></textarea>
+      </div>
+    </div>
+    <button class="submit-btn" onclick="handleSubmit()">Send My Request →</button>
+    <div class="success-msg" id="success">
+      ✓ &nbsp; Thanks! Tukton Tap will reach out within a few hours to get your card set up.
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Tukton Tap · Vancouver, BC · <a href="mailto:roanwoud@gmail.com" style="color:var(--gray);text-decoration:none;">roanwoud@gmail.com</a></p>
+  <ul class="footer-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#packages">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  function handleSubmit() {
+    const fname = document.getElementById('fname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const biz = document.getElementById('biz').value.trim();
+
+    if (!fname || !email || !biz) {
+      alert('Please fill in your name, business name, and email to continue.');
+      return;
+    }
+
+    document.querySelector('.submit-btn').textContent = 'Sending...';
+    document.querySelector('.submit-btn').disabled = true;
+
+    setTimeout(() => {
+      document.getElementById('success').style.display = 'block';
+      document.querySelector('.submit-btn').style.display = 'none';
+    }, 800);
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.step-card, .package-card, .testi-card, .van-stat-box').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
